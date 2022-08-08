@@ -18,7 +18,11 @@
     <packaging>pom</packaging>
     <modules>
         <module>rest</module>
+        <module>data</module>
+        <module>api</module>
+        <module>core</module>
     </modules>
+
     <properties>
         <java.version>17</java.version>
     </properties>
