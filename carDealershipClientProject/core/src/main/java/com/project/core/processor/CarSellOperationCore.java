@@ -1,4 +1,4 @@
-package com.project.core;
+package com.project.core.processor;
 
 import com.project.api.base.Error;
 import com.project.api.error.CarNotAvailableError;

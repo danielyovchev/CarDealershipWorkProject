@@ -9,13 +9,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-@Getter
-@Setter
-public class Employee {
+@Getter @Setter
+public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstName;
-    private String lastName;
-    private Double salary;
+    private String vin;
+    private String make;
+    private String model;
+    private String fuel;
+    private Integer mileage;
+    private Double price;
+    private String status;
 }

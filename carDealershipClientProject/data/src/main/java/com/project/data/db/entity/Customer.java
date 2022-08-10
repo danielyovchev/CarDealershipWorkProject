@@ -11,11 +11,11 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @Setter
-public class Employee {
+public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String firstName;
     private String lastName;
-    private Double salary;
+    private Integer bought;
 }
