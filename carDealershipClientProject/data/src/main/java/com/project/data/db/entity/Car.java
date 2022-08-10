@@ -21,4 +21,5 @@ public class Car {
     private Integer mileage;
     private Double price;
     private String status;
+    private Integer year;
 }

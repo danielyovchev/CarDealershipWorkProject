@@ -1,9 +1,9 @@
 package com.project.data.db.repository;
 
+import com.project.data.db.entity.Employee;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.Entity;
-
 @Repository
-public interface EmployeeRepository {
+public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 }
