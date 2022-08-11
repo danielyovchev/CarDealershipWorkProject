@@ -10,6 +10,7 @@ import com.project.api.operation.GetCarByIdOperation;
 import io.vavr.control.Either;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,7 +31,7 @@ public class HomeController {
         }*/
         return ResponseEntity.status(HttpStatus.OK).body(result.get());
     }
-    @PostMapping("getById")
+    @PostMapping("/getById")
     public ResponseEntity<?> showCar(@RequestBody CarByIdRequest carByIdRequest){
         Either<Error, CarByIdResponse> result = getCarByIdOperation.process(carByIdRequest);
         return ResponseEntity.status(HttpStatus.OK).body(result.get());
