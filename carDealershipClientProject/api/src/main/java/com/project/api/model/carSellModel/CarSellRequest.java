@@ -7,4 +7,7 @@ import lombok.Getter;
 public class CarSellRequest implements OperationInput {
     private String vin;
     private String dealType;
+    private Integer months;
+    private Integer employeeId;
+    private Integer customerId;
 }
