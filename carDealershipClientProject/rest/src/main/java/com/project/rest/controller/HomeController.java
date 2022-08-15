@@ -26,9 +26,9 @@ public class HomeController {
     @PostMapping("/sellCar")
     public ResponseEntity<?> sellCar(@RequestBody CarSellRequest carSellRequest){
         Either<Error, CarSellResponse> result = carSellOperation.process(carSellRequest);
-        /*if(result.isLeft()){
-            return ResponseEntity.status(result.getLeft().getCode).body(result.getLeft().getMessage());
-        }*/
+        if(result.isLeft()){
+            return ResponseEntity.status(result.getLeft().getCode()).body(result.getLeft().getMessage());
+        }
         return ResponseEntity.status(HttpStatus.OK).body(result.get());
     }
     @PostMapping("/getById")
