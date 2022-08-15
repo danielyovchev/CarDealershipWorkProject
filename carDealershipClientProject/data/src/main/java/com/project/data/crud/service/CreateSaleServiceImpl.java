@@ -15,7 +15,6 @@ import com.project.data.db.repository.EmployeeRepository;
 import com.project.data.db.repository.SalesRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
 @Service
 public class CreateSaleServiceImpl implements CreateSaleService {
@@ -33,23 +32,17 @@ public class CreateSaleServiceImpl implements CreateSaleService {
 
     @Override
     public Long createSale(CarSellRequest carSellRequest) {
-        final Optional<Car> car = carRepository.findByVin(carSellRequest.getVin());
-        final Optional<Customer> customer = customerRepository.findById(Long.valueOf(carSellRequest.getCustomerId()));
-        final Optional<Employee> employee = employeeRepository.findById(Long.valueOf(carSellRequest.getEmployeeId()));
+        final Car car = carRepository.findByVin(carSellRequest.getVin()).orElseThrow(CarNotFoundException::new);
+        final Customer customer = customerRepository.findById(Long.valueOf(carSellRequest.getCustomerId())).orElseThrow(CustomerNotFoundException::new);
+        final Employee employee = employeeRepository.findById(Long.valueOf(carSellRequest.getEmployeeId())).orElseThrow(EmployeeNotFoundException::new);
         if(!carRepository.existsByVin(carSellRequest.getVin())){
             throw new CarNotFoundException();
         }
-        if(!customerRepository.existsById(Long.valueOf(carSellRequest.getCustomerId()))){
-            throw new CustomerNotFoundException();
-        }
-        if(!employeeRepository.existsById(Long.valueOf(carSellRequest.getEmployeeId()))){
-            throw new EmployeeNotFoundException();
-        }
         Sales sale = new Sales();
-        sale.setCarId(car.get().getId());
-        sale.setCustomerId(customer.get().getId());
-        sale.setEmployeeId(employee.get().getId());
-        sale.setPrice(car.orElseThrow().getPrice());
+        sale.setCarId(car.getId());
+        sale.setCustomerId(customer.getId());
+        sale.setEmployeeId(employee.getId());
+        sale.setPrice(car.getPrice());
         sale.setDate(carSellRequest.getDate());
         salesRepository.save(sale);
         return sale.getId();
