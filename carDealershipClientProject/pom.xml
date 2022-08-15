@@ -32,6 +32,11 @@
             <name>Project Repository</name>
             <url>file://C:/repositoryProject</url>
         </repository>
+        <repository>
+            <id>price-repo</id>
+            <name>Price Repository</name>
+            <url>file://C:/calculationRepository</url>
+        </repository>
     </repositories>
     <dependencies>
         <dependency>

@@ -10,4 +10,5 @@ import lombok.*;
 public class CarSellResponse implements OperationResult {
     private Double price;
     private String car;
+    private String message;
 }

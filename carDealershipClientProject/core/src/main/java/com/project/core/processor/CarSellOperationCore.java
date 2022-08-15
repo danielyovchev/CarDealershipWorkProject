@@ -1,5 +1,7 @@
 package com.project.core.processor;
 
+import com.price.api.feign.PriceFeign;
+import com.price.api.model.PriceRequest;
 import com.project.api.base.Error;
 import com.project.api.error.CarNotAvailableError;
 import com.project.api.error.CarNotFoundError;
@@ -22,17 +24,28 @@ import org.springframework.stereotype.Service;
 public class CarSellOperationCore implements CarSellOperation {
     private final MapCarFromApiService carFromApiService;
     private final CreateSaleService createSaleService;
-    public CarSellOperationCore(MapCarFromApiService carFromApiService, CreateSaleService createSaleService) {
+    private final PriceFeign priceFeign;
+    public CarSellOperationCore(MapCarFromApiService carFromApiService, CreateSaleService createSaleService, PriceFeign priceFeign) {
         this.carFromApiService = carFromApiService;
         this.createSaleService = createSaleService;
+        this.priceFeign = priceFeign;
     }
 
     @Override
     public Either<Error, CarSellResponse> process(CarSellRequest carSellRequest) {
         final CarDomainModel car = carFromApiService.getCar(carSellRequest.getVin());
+        final PriceRequest priceRequest = new PriceRequest();
+        priceRequest.setBasePrice(car.getPrice());
+        priceRequest.setCustomerPurchasedCars(1);
+        priceRequest.setMonths(carSellRequest.getMonths());
+        priceRequest.setType(carSellRequest.getDealType());
         return Try.of(() -> {
             createSaleService.createSale(carSellRequest);
-            return CarSellResponse.builder().car(car.getMake()+" "+ car.getModel()).price(car.getPrice()).build();
+            return CarSellResponse.builder()
+                    .car(car.getMake()+" "+ car.getModel())
+                    .price(priceFeign.getPrice(priceRequest).getPrice())
+                    .message("Tomorrow more")
+                    .build();
         }).toEither().mapLeft( Throwable -> {
             if(Throwable instanceof CarNotFoundException){
                 return new CarNotFoundError();
