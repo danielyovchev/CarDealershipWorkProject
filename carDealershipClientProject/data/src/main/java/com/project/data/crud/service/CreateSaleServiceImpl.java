@@ -45,6 +45,10 @@ public class CreateSaleServiceImpl implements CreateSaleService {
         sale.setPrice(car.getPrice());
         sale.setDate(carSellRequest.getDate());
         salesRepository.save(sale);
+        car.setStatus("sold");
+        carRepository.save(car);
+        customer.setBought(customer.getBought()+1);
+        customerRepository.save(customer);
         return sale.getId();
     }
 }

@@ -3,10 +3,7 @@ package com.project.core.processor;
 import com.price.api.feign.PriceFeign;
 import com.price.api.model.PriceRequest;
 import com.project.api.base.Error;
-import com.project.api.error.CarNotAvailableError;
-import com.project.api.error.CarNotFoundError;
-import com.project.api.error.CustomerNotFoundError;
-import com.project.api.error.EmployeeNotFoundError;
+import com.project.api.error.*;
 import com.project.api.model.carSellModel.CarSellRequest;
 import com.project.api.model.carSellModel.CarSellResponse;
 import com.project.api.operation.CarSellOperation;
@@ -14,6 +11,8 @@ import com.project.data.crud.exception.CarNotFoundException;
 import com.project.data.crud.exception.CustomerNotFoundException;
 import com.project.data.crud.exception.EmployeeNotFoundException;
 import com.project.data.crud.interfaces.CreateSaleService;
+import com.project.data.domain.exception.InvalidPriceException;
+import com.project.data.domain.interfaces.GetPriceService;
 import com.project.data.domain.interfaces.MapCarFromApiService;
 import com.project.data.domain.model.CarDomainModel;
 import io.vavr.control.Either;
@@ -24,11 +23,11 @@ import org.springframework.stereotype.Service;
 public class CarSellOperationCore implements CarSellOperation {
     private final MapCarFromApiService carFromApiService;
     private final CreateSaleService createSaleService;
-    private final PriceFeign priceFeign;
-    public CarSellOperationCore(MapCarFromApiService carFromApiService, CreateSaleService createSaleService, PriceFeign priceFeign) {
+    private final GetPriceService getPriceService;
+    public CarSellOperationCore(MapCarFromApiService carFromApiService, CreateSaleService createSaleService, GetPriceService getPriceService) {
         this.carFromApiService = carFromApiService;
         this.createSaleService = createSaleService;
-        this.priceFeign = priceFeign;
+        this.getPriceService = getPriceService;
     }
 
     @Override
@@ -43,8 +42,8 @@ public class CarSellOperationCore implements CarSellOperation {
             createSaleService.createSale(carSellRequest);
             return CarSellResponse.builder()
                     .car(car.getMake()+" "+ car.getModel())
-                    .price(priceFeign.getPrice(priceRequest).getPrice())
-                    .message("Tomorrow more")
+                    .price(getPriceService.getPriceFromService(priceRequest).getPrice())
+                    .message(getPriceService.getPriceFromService(priceRequest).getMessage())
                     .build();
         }).toEither().mapLeft( Throwable -> {
             if(Throwable instanceof CarNotFoundException){
@@ -55,6 +54,9 @@ public class CarSellOperationCore implements CarSellOperation {
             }
             if(Throwable instanceof EmployeeNotFoundException){
                 return new EmployeeNotFoundError();
+            }
+            if(Throwable instanceof InvalidPriceException){
+                return new InvalidPricingError();
             }
             return new CarNotAvailableError();
         });
