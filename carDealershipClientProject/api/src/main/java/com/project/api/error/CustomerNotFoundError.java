@@ -11,6 +11,6 @@ public class CustomerNotFoundError implements Error {
 
     @Override
     public String getMessage() {
-        return "Customer is not in db";
+        return "Customer is not in db!";
     }
 }

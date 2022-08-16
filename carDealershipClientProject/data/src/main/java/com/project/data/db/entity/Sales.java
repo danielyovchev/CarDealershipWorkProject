@@ -16,6 +16,7 @@ public class Sales {
     private Long employeeId;
     private Long customerId;
     private Double price;
+    private String dealType;
     private LocalDate date;
     @ManyToOne
     @JoinColumn(name = "carId", insertable = false, updatable = false)
