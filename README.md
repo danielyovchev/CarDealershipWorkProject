@@ -17,3 +17,5 @@ Project links:
 https://github.com/danielyovchev/carProjectApiService.git
 Сървис за изчисляване на цена
 https://github.com/danielyovchev/CarPriceCalculationService.git
+Сървис за изчисляване на заплата на служител
+https://github.com/danielyovchev/SalaryCalculatorService.git
