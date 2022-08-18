@@ -5,7 +5,9 @@ import com.project.data.crud.interfaces.GetAllCarsByColour;
 import com.project.data.db.repository.CarRepository;
 import com.project.data.domain.interfaces.MapCarFromApiService;
 import com.project.data.domain.mapper.DomainToResponseMapper;
+import org.springframework.stereotype.Service;
 
+@Service
 public class GetAllCarsByColourServiceImpl implements GetAllCarsByColour {
     private final CarRepository carRepository;
     private final MapCarFromApiService carFromApiService;
