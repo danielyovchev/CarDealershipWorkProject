@@ -34,15 +34,15 @@ public class CarSellOperationCore implements CarSellOperation {
 
     @Override
     public Either<Error, CarSellResponse> process(CarSellRequest carSellRequest) {
-        final CarDomainModel car = carFromApiService.getCar(carSellRequest.getVin());
-        final PriceRequest priceRequest = PriceRequest.builder()
-                .basePrice(car.getPrice())
-                .customerPurchasedCars(customerRepository.findById(Long.valueOf(carSellRequest.getCustomerId()))
-                        .orElseThrow(CustomerNotFoundException::new).getBought())
-                .months(carSellRequest.getMonths())
-                .type(carSellRequest.getDealType())
-                .build();
         return Try.of(() -> {
+            final CarDomainModel car = carFromApiService.getCar(carSellRequest.getVin());
+            final PriceRequest priceRequest = PriceRequest.builder()
+                    .basePrice(car.getPrice())
+                    .customerPurchasedCars(customerRepository.findById(Long.valueOf(carSellRequest.getCustomerId()))
+                            .orElseThrow(CustomerNotFoundException::new).getBought())
+                    .months(carSellRequest.getMonths())
+                    .type(carSellRequest.getDealType())
+                    .build();
             createSaleService.createSale(carSellRequest, getPriceService.getPriceFromService(priceRequest).getPrice());
             return CarSellResponse.builder()
                     .car(car.getMake()+" "+ car.getModel())

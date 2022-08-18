@@ -37,6 +37,11 @@
             <name>Price Repository</name>
             <url>file://C:/calculationRepository</url>
         </repository>
+        <repository>
+            <id>salary-repo</id>
+            <name>Salary Repository</name>
+            <url>file://C:/salaryRepo</url>
+        </repository>
     </repositories>
     <dependencies>
         <dependency>

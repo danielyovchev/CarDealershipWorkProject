@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EnableFeignClients(basePackages = {"com.example.api", "com.price.api"})
+@EnableFeignClients(basePackages = {"com.example.api", "com.price.api", "com.salary.api"})
 @ComponentScan("com.project")
 @EnableJpaRepositories(basePackages = {"com.project.data"})
 @EntityScan(
