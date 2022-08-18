@@ -1,15 +1,18 @@
 package com.project.api.model.carBuyModel;
 
-import com.project.api.base.OperationInput;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter(AccessLevel.PRIVATE) @Builder
-public class CarBuyRequest implements OperationInput {
+public class CreateCarRequest {
     private String vin;
+    private String make;
+    private String model;
+    private String fuel;
     private Integer mileage;
-    private String colour;
     private Double price;
+    private String colour;
+    private Integer year;
 }
