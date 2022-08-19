@@ -26,6 +26,7 @@ public class GetAllCarsByFuelImpl implements GetAllCarsByFuel {
                 .carList(carRepository.findAllByFuel(fuel)
                         .stream()
                         .map(x -> carFromApiService.getCar(x.getVin()))
+                        .filter(x -> x.getStatus().equals("available"))
                         .map(mapper::mapCar)
                 .toList()).build();
     }

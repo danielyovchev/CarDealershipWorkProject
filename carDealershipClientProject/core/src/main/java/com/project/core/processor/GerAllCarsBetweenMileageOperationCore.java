@@ -23,10 +23,7 @@ public class GerAllCarsBetweenMileageOperationCore implements GetAllCarsBetweenM
     @Override
     public Either<Error, CarListResponse> process(MileageRequest input) {
         return Try.of(() -> {
-            return (CarListResponse) getAllCarsBetweenMileage.getByMileageBetween(input.getStart(), input.getEnd())
-                    .getCarList().stream()
-                    .map(x -> x.getStatus().equals("available"))
-                    .collect(Collectors.toList());
+            return getAllCarsBetweenMileage.getByMileageBetween(input.getStart(), input.getEnd());
         }).toEither().mapLeft(Throwable -> {
             if(Throwable instanceof CarNotFoundException){
                 return new CarNotFoundError();

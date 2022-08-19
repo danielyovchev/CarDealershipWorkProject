@@ -25,6 +25,7 @@ public class GetAllCarsBetweenMileageServiceImpl implements GetAllCarsBetweenMil
                 .carList(carRepository.findAllByMileageBetween(start, end)
                         .stream()
                         .map(x -> carFromApiService.getCar(x.getVin()))
+                        .filter(x -> x.getStatus().equals("available"))
                         .map(mapper::mapCar)
                         .toList()).build();
     }

@@ -25,6 +25,7 @@ public class GetAllCarsByMakeServiceImpl implements GetAllCarsByMake {
                 .carList(carRepository.findAllByMake(make)
                         .stream()
                         .map(x -> carFromApiService.getCar(x.getVin()))
+                        .filter(x -> x.getStatus().equals("available"))
                         .map(mapper::mapCar)
                         .toList()).build();
     }

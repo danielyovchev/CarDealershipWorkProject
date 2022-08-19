@@ -24,6 +24,7 @@ public class GetAllCarsServiceImpl implements GetAllCars {
         return CarListResponse.builder()
                 .carList(carRepository.findAll().stream()
                         .map(x -> carFromApiService.getCar(x.getVin()))
+                        .filter(x -> x.getStatus().equals("available"))
                         .map(mapper::mapCar)
                         .toList()).build();
     }

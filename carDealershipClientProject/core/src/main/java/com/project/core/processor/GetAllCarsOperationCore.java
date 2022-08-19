@@ -23,14 +23,7 @@ public class GetAllCarsOperationCore implements GetAllCarsOperation {
 
     @Override
     public Either<Error, CarListResponse> process(AllCarRequest input) {
-        return Try.of(() -> {
-            return (CarListResponse) getAllCars.getAllCars()
-                    .getCarList().stream()
-                    .map(x -> {
-                        return x.getStatus().equals("available");
-                    })
-                    .collect(Collectors.toList());
-        }).toEither().mapLeft(Throwable -> {
+        return Try.of(getAllCars::getAllCars).toEither().mapLeft(Throwable -> {
             if(Throwable instanceof CarNotFoundException){
                 return new CarNotFoundError();
             }

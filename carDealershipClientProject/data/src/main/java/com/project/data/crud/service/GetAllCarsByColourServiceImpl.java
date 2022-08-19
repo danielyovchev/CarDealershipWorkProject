@@ -25,6 +25,7 @@ public class GetAllCarsByColourServiceImpl implements GetAllCarsByColour {
                 .carList(carRepository.findAllByColour(colour)
                         .stream()
                         .map(x -> carFromApiService.getCar(x.getVin()))
+                        .filter(x -> x.getStatus().equals("available"))
                         .map(mapper::mapCar)
                         .toList()).build();
     }
