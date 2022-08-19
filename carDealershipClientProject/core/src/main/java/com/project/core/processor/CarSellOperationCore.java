@@ -33,7 +33,7 @@ public class CarSellOperationCore implements CarSellOperation {
     }
 
     @Override
-    public Either<Error, CarSellResponse> process(CarSellRequest carSellRequest) {
+    public Either<Error, CarSellResponse> process(final CarSellRequest carSellRequest) {
         return Try.of(() -> {
             final CarDomainModel car = carFromApiService.getCar(carSellRequest.getVin());
             final PriceRequest priceRequest = PriceRequest.builder()
