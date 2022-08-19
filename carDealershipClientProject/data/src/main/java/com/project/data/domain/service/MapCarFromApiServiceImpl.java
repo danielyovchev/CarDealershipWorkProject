@@ -35,7 +35,7 @@ public class MapCarFromApiServiceImpl implements MapCarFromApiService {
                 .vin(carEntity.orElseThrow(CarNotFoundException::new).getVin())
                 .make(carApiResponseModel.getMake())
                 .model(carApiResponseModel.getModel())
-                .fuel(carApiResponseModel.getFuel())
+                .fuel(carEntity.get().getFuel())
                 .mileage(carEntity.get().getMileage())
                 .price(carEntity.get().getPrice())
                 .status(carEntity.get().getStatus())
