@@ -36,7 +36,8 @@ public class CRUDController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(result.get());
     }
-    @GetMapping("/getAllCarsByMake")
+    //to do refactor to make
+    @PostMapping("/getAllCarsByMake")
     public CarListResponse getByMake(@RequestParam String make){
         return getAllCarsByMake.getAllCarsByMake(make);
     }
@@ -48,6 +49,7 @@ public class CRUDController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(result.get());
     }
+    //to do refactor to colour
     @GetMapping("/allByColour")
     public CarListResponse getByColour(@RequestParam String colour){
         return getAllCarsByColour.getByColour(colour);
