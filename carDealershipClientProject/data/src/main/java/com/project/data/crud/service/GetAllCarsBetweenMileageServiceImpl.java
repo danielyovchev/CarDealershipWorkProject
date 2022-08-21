@@ -1,6 +1,7 @@
 package com.project.data.crud.service;
 
 import com.project.api.model.carsByParam.CarListResponse;
+import com.project.data.crud.exception.CarNotFoundException;
 import com.project.data.crud.interfaces.GetAllCarsBetweenMileage;
 import com.project.data.db.repository.CarRepository;
 import com.project.data.domain.interfaces.MapCarFromApiService;
@@ -21,6 +22,9 @@ public class GetAllCarsBetweenMileageServiceImpl implements GetAllCarsBetweenMil
 
     @Override
     public CarListResponse getByMileageBetween(Integer start, Integer end) {
+        if(carRepository.findAllByMileageBetween(start, end).isEmpty()){
+            throw new CarNotFoundException();
+        }
         return CarListResponse.builder()
                 .carList(carRepository.findAllByMileageBetween(start, end)
                         .stream()

@@ -2,6 +2,8 @@ package com.project.core.processor;
 
 import com.project.api.base.Error;
 import com.project.api.error.CarNotFoundError;
+import com.project.api.error.InternalError;
+import com.project.api.error.NoCarsForCriteriaError;
 import com.project.api.model.carsByParam.CarListResponse;
 import com.project.api.model.carsByParam.FuelRequest;
 import com.project.api.operation.GetAllCarsByFuelOperation;
@@ -26,9 +28,9 @@ public class GetAllCarsByFuelOperationCore implements GetAllCarsByFuelOperation 
             return getAllCarsByFuel.getAllCarsByFuel(input.getFuel());
         }).toEither().mapLeft(Throwable -> {
             if(Throwable instanceof CarNotFoundException){
-                return new CarNotFoundError();
+                return new NoCarsForCriteriaError();
             }
-            return new CarNotFoundError();
+            return new InternalError();
         });
     }
 }

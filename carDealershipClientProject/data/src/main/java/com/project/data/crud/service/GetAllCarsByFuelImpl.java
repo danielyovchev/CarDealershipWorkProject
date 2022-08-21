@@ -1,6 +1,7 @@
 package com.project.data.crud.service;
 
 import com.project.api.model.carsByParam.CarListResponse;
+import com.project.data.crud.exception.CarNotFoundException;
 import com.project.data.crud.interfaces.GetAllCarsByFuel;
 import com.project.data.db.repository.CarRepository;
 import com.project.data.domain.interfaces.MapCarFromApiService;
@@ -20,8 +21,10 @@ public class GetAllCarsByFuelImpl implements GetAllCarsByFuel {
     }
 
     @Override
-    public CarListResponse getAllCarsByFuel(String fuel) {
-
+    public CarListResponse getAllCarsByFuel(String fuel){
+        if(carRepository.findAllByFuel(fuel).isEmpty()){
+            throw new CarNotFoundException();
+        }
         return CarListResponse.builder()
                 .carList(carRepository.findAllByFuel(fuel)
                         .stream()

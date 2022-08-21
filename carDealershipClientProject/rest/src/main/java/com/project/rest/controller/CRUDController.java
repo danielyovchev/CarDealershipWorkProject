@@ -46,8 +46,8 @@ public class CRUDController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(result.get());
     }
-    @GetMapping("/allByColour")
-    public ResponseEntity<?> getByColour(@RequestParam CarColourRequest carColourRequest){
+    @PostMapping("/allByColour")
+    public ResponseEntity<?> getByColour(@RequestBody CarColourRequest carColourRequest){
         Either<Error, CarListResponse> result = getAllCarsByColour.process(carColourRequest);
         if(result.isLeft()){
             return ResponseEntity.status(result.getLeft().getCode()).body(result.getLeft().getMessage());

@@ -2,6 +2,8 @@ package com.project.core.processor;
 
 import com.project.api.base.Error;
 import com.project.api.error.CarNotFoundError;
+import com.project.api.error.InternalError;
+import com.project.api.error.NoCarsForCriteriaError;
 import com.project.api.model.carsByParam.CarListResponse;
 import com.project.api.model.carsByParam.CarMakeRequest;
 import com.project.api.operation.GetAllCarsByMakeOperation;
@@ -26,9 +28,9 @@ public class GetAllCarsByMakeOperationCore implements GetAllCarsByMakeOperation 
             return getAllCarsByMake.getAllCarsByMake(input.getMake());
         }).toEither().mapLeft(Throwable -> {
             if(Throwable instanceof CarNotFoundException){
-                return new CarNotFoundError();
+                return new NoCarsForCriteriaError();
             }
-            return new CarNotFoundError();
+            return new InternalError();
         });
     }
 }

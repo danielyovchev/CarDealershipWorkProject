@@ -1,6 +1,7 @@
 package com.project.data.crud.service;
 
 import com.project.api.model.carsByParam.CarListResponse;
+import com.project.data.crud.exception.CarNotFoundException;
 import com.project.data.crud.interfaces.GetAllCarsByMake;
 import com.project.data.db.repository.CarRepository;
 import com.project.data.domain.interfaces.MapCarFromApiService;
@@ -21,6 +22,9 @@ public class GetAllCarsByMakeServiceImpl implements GetAllCarsByMake {
 
     @Override
     public CarListResponse getAllCarsByMake(String make) {
+        if(carRepository.findAllByMake(make).isEmpty()){
+            throw new CarNotFoundException();
+        }
         return CarListResponse.builder()
                 .carList(carRepository.findAllByMake(make)
                         .stream()

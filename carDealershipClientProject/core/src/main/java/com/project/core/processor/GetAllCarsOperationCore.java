@@ -2,6 +2,8 @@ package com.project.core.processor;
 
 import com.project.api.base.Error;
 import com.project.api.error.CarNotFoundError;
+import com.project.api.error.InternalError;
+import com.project.api.error.NoCarsForCriteriaError;
 import com.project.api.model.carsByParam.AllCarRequest;
 import com.project.api.model.carsByParam.CarListResponse;
 import com.project.api.operation.GetAllCarsOperation;
@@ -26,9 +28,9 @@ public class GetAllCarsOperationCore implements GetAllCarsOperation {
     public Either<Error, CarListResponse> process(AllCarRequest input) {
         return Try.of(getAllCars::getAllCars).toEither().mapLeft(Throwable -> {
             if(Throwable instanceof CarNotFoundException){
-                return new CarNotFoundError();
+                return new NoCarsForCriteriaError();
             }
-            return new CarNotFoundError();
+            return new InternalError();
         });
     }
 }
