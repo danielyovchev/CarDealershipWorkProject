@@ -11,12 +11,11 @@ import io.vavr.control.Either;
 import io.vavr.control.Try;
 import org.springframework.stereotype.Service;
 
-import java.util.stream.Collectors;
 @Service
-public class GerAllCarsBetweenMileageOperationCore implements GetAllCarsBetweenMileageOperation {
+public class GetAllCarsBetweenMileageOperationCore implements GetAllCarsBetweenMileageOperation {
     private final GetAllCarsBetweenMileage getAllCarsBetweenMileage;
 
-    public GerAllCarsBetweenMileageOperationCore(GetAllCarsBetweenMileage getAllCarsBetweenMileage) {
+    public GetAllCarsBetweenMileageOperationCore(GetAllCarsBetweenMileage getAllCarsBetweenMileage) {
         this.getAllCarsBetweenMileage = getAllCarsBetweenMileage;
     }
 

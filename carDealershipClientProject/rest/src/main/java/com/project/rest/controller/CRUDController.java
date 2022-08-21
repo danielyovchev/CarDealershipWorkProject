@@ -1,14 +1,8 @@
 package com.project.rest.controller;
 
 import com.project.api.base.Error;
-import com.project.api.model.carsByParam.AllCarRequest;
-import com.project.api.model.carsByParam.CarListResponse;
-import com.project.api.model.carsByParam.FuelRequest;
-import com.project.api.model.carsByParam.MileageRequest;
-import com.project.api.operation.GetAllCarsBetweenMileageOperation;
-import com.project.api.operation.GetAllCarsByFuelOperation;
-import com.project.api.operation.GetAllCarsOperation;
-import com.project.data.crud.interfaces.*;
+import com.project.api.model.carsByParam.*;
+import com.project.api.operation.*;
 import io.vavr.control.Either;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +12,10 @@ import org.springframework.web.bind.annotation.*;
 public class CRUDController {
     private final GetAllCarsOperation getAllCarsOperation;
     private final GetAllCarsByFuelOperation getAllCarsByFuel;
-    private final GetAllCarsByMake getAllCarsByMake;
-    private final GetAllCarsByColour getAllCarsByColour;
+    private final GetAllCarsByMakeOperation getAllCarsByMake;
+    private final GetAllCarsByColourOperation getAllCarsByColour;
     private final GetAllCarsBetweenMileageOperation getAllCarsBetweenMileage;
-    public CRUDController(GetAllCarsOperation getAllCarsOperation, GetAllCarsByFuelOperation getAllCarsByFuel, GetAllCarsByMake getAllCarsByMake, GetAllCarsByColour getAllCarsByColour, GetAllCarsBetweenMileageOperation getAllCarsBetweenMileage) {
+    public CRUDController(GetAllCarsOperation getAllCarsOperation, GetAllCarsByFuelOperation getAllCarsByFuel, GetAllCarsByMakeOperation getAllCarsByMake, GetAllCarsByColourOperation getAllCarsByColour, GetAllCarsBetweenMileageOperation getAllCarsBetweenMileage) {
         this.getAllCarsOperation = getAllCarsOperation;
         this.getAllCarsByFuel = getAllCarsByFuel;
         this.getAllCarsByMake = getAllCarsByMake;
@@ -36,10 +30,13 @@ public class CRUDController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(result.get());
     }
-    //to do refactor to make
     @PostMapping("/getAllCarsByMake")
-    public CarListResponse getByMake(@RequestParam String make){
-        return getAllCarsByMake.getAllCarsByMake(make);
+    public ResponseEntity<?> getByMake(@RequestBody CarMakeRequest carMakeRequest){
+        Either<Error, CarListResponse> result = getAllCarsByMake.process(carMakeRequest);
+        if(result.isLeft()){
+            return ResponseEntity.status(result.getLeft().getCode()).body(result.getLeft().getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(result.get());
     }
     @PostMapping("/allByFuel")
     public ResponseEntity<?> getByFuel(@RequestBody FuelRequest fuel){
@@ -49,10 +46,13 @@ public class CRUDController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(result.get());
     }
-    //to do refactor to colour
     @GetMapping("/allByColour")
-    public CarListResponse getByColour(@RequestParam String colour){
-        return getAllCarsByColour.getByColour(colour);
+    public ResponseEntity<?> getByColour(@RequestParam CarColourRequest carColourRequest){
+        Either<Error, CarListResponse> result = getAllCarsByColour.process(carColourRequest);
+        if(result.isLeft()){
+            return ResponseEntity.status(result.getLeft().getCode()).body(result.getLeft().getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(result.get());
     }
     @PostMapping("/allBetweenMileage")
     public ResponseEntity<?> getBetweenMileage(@RequestBody MileageRequest mileageRequest){
