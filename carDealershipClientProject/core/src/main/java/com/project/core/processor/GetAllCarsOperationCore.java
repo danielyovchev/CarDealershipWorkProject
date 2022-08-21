@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class GetAllCarsOperationCore implements GetAllCarsOperation {
+    //list of all cars available
     private final GetAllCars getAllCars;
 
     public GetAllCarsOperationCore(GetAllCars getAllCars) {

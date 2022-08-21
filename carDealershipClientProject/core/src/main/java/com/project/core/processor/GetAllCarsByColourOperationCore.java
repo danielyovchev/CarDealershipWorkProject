@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class GetAllCarsByColourOperationCore implements GetAllCarsByColourOperation {
+    //returns all available cars by selected colour
     private final GetAllCarsByMake getAllCarsByMake;
 
     public GetAllCarsByColourOperationCore(GetAllCarsByMake getAllCarsByMake) {
@@ -20,7 +21,7 @@ public class GetAllCarsByColourOperationCore implements GetAllCarsByColourOperat
     }
 
     @Override
-    public Either<Error, CarListResponse> process(CarColourRequest input) {
+    public Either<Error, CarListResponse> process(final CarColourRequest input) {
         return Try.of(() -> {
             return getAllCarsByMake.getAllCarsByMake(input.getColour());
         }).toEither().mapLeft(Throwable -> {

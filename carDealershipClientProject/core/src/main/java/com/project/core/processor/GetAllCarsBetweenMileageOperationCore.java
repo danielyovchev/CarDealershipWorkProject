@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class GetAllCarsBetweenMileageOperationCore implements GetAllCarsBetweenMileageOperation {
+    // returns all available cars between given mileage
     private final GetAllCarsBetweenMileage getAllCarsBetweenMileage;
 
     public GetAllCarsBetweenMileageOperationCore(GetAllCarsBetweenMileage getAllCarsBetweenMileage) {
@@ -20,7 +21,7 @@ public class GetAllCarsBetweenMileageOperationCore implements GetAllCarsBetweenM
     }
 
     @Override
-    public Either<Error, CarListResponse> process(MileageRequest input) {
+    public Either<Error, CarListResponse> process(final MileageRequest input) {
         return Try.of(() -> {
             return getAllCarsBetweenMileage.getByMileageBetween(input.getStart(), input.getEnd());
         }).toEither().mapLeft(Throwable -> {

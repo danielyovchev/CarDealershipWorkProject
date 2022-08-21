@@ -1,6 +1,5 @@
 package com.project.api.model.employee;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.api.base.OperationInput;
 import lombok.Getter;
 import lombok.Setter;

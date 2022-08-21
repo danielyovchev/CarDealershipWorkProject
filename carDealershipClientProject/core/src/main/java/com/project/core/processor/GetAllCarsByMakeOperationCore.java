@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class GetAllCarsByMakeOperationCore implements GetAllCarsByMakeOperation {
+    // returns all available cars by selected car make
     private final GetAllCarsByMake getAllCarsByMake;
 
     public GetAllCarsByMakeOperationCore(GetAllCarsByMake getAllCarsByMake) {
@@ -20,7 +21,7 @@ public class GetAllCarsByMakeOperationCore implements GetAllCarsByMakeOperation 
     }
 
     @Override
-    public Either<Error, CarListResponse> process(CarMakeRequest input) {
+    public Either<Error, CarListResponse> process(final CarMakeRequest input) {
         return Try.of(() -> {
             return getAllCarsByMake.getAllCarsByMake(input.getMake());
         }).toEither().mapLeft(Throwable -> {

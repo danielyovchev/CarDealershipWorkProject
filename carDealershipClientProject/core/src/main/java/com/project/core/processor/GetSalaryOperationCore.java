@@ -21,6 +21,7 @@ import java.time.YearMonth;
 
 @Service
 public class GetSalaryOperationCore implements GetSalaryOperation {
+    // operation for calculation employee's salary depending on how many car he sold during given month
     private final GetSalaryService getSalaryService;
     private final SalesRepository salesRepository;
     private final EmployeeRepository employeeRepository;
@@ -32,7 +33,7 @@ public class GetSalaryOperationCore implements GetSalaryOperation {
     }
 
     @Override
-    public Either<Error, EmployeeSalaryResponse> process(EmployeeSalaryRequest input) {
+    public Either<Error, EmployeeSalaryResponse> process(final EmployeeSalaryRequest input) {
 
         return Try.of(() -> {
             final Employee employee = employeeRepository.findById(input.getId()).orElseThrow(EmployeeNotFoundException::new);
