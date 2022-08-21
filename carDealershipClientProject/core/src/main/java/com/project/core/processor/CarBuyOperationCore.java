@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CarBuyOperationCore implements CarBuyOperation {
+    //operation for buying car by entering vin and data not available in api, getting info from the api
+    // and adding the car to database;
     private final CreateCarService createCarService;
     private final ApiFeignClient apiFeignClient;
     public CarBuyOperationCore(CreateCarService createCarService, MapCarFromApiService carFromApiService, ApiFeignClient apiFeignClient) {
@@ -28,7 +30,7 @@ public class CarBuyOperationCore implements CarBuyOperation {
     }
 
     @Override
-    public Either<Error, CarBuyResponse> process(CarBuyRequest input) {
+    public Either<Error, CarBuyResponse> process(final CarBuyRequest input) {
         return Try.of(() -> {
             if(input.getMileage()>350000){
                 return CarBuyResponse.builder().message("Car has done too many kilometers").build();

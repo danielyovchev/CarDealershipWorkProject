@@ -11,9 +11,9 @@ import io.vavr.control.Either;
 import io.vavr.control.Try;
 import org.springframework.stereotype.Service;
 
-import java.util.stream.Collectors;
 @Service
 public class GetAllCarsByFuelOperationCore implements GetAllCarsByFuelOperation {
+    // returns all available cars by selected fuel
     private final GetAllCarsByFuel getAllCarsByFuel;
 
     public GetAllCarsByFuelOperationCore(GetAllCarsByFuel getAllCarsByFuel) {
@@ -21,7 +21,7 @@ public class GetAllCarsByFuelOperationCore implements GetAllCarsByFuelOperation 
     }
 
     @Override
-    public Either<Error, CarListResponse> process(FuelRequest input) {
+    public Either<Error, CarListResponse> process(final FuelRequest input) {
         return Try.of(() -> {
             return getAllCarsByFuel.getAllCarsByFuel(input.getFuel());
         }).toEither().mapLeft(Throwable -> {

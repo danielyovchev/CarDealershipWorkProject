@@ -21,6 +21,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CarSellOperationCore implements CarSellOperation {
+    //selling car by vin, checking if it's available for sell, getting its model
+    //by combining entity and external data from api, calculating price from external service,
+    //depending on deal type and adding the sale to sales table
     private final MapCarFromApiService carFromApiService;
     private final CreateSaleService createSaleService;
     private final GetPriceService getPriceService;
