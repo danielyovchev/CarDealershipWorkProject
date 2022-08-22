@@ -3,7 +3,7 @@ package com.project.data.domain.model;
 import lombok.*;
 
 
-@Getter @Setter(AccessLevel.PRIVATE) @Builder @ToString
+@Getter @Setter @Builder @ToString @AllArgsConstructor @NoArgsConstructor
 public class CarDomainModel {
     private String vin;
     private String make;
