@@ -1,7 +1,7 @@
 package com.project.data.crud.interfaces;
 
-import com.project.api.model.carsByParam.CarListResponse;
+import com.project.data.domain.model.CarListDomainResponse;
 
 public interface GetAllCarsBetweenMileage {
-    CarListResponse getByMileageBetween(Integer start, Integer end);
+    CarListDomainResponse getByMileageBetween(Integer start, Integer end);
 }

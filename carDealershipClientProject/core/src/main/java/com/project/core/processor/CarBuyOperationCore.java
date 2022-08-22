@@ -12,7 +12,6 @@ import com.project.api.model.carBuyModel.CreateCarRequest;
 import com.project.api.operation.CarBuyOperation;
 import com.project.data.crud.exception.CarAlreadyExistsException;
 import com.project.data.crud.interfaces.CreateCarService;
-import com.project.data.domain.interfaces.MapCarFromApiService;
 import feign.FeignException;
 import io.vavr.control.Either;
 import io.vavr.control.Try;
@@ -24,7 +23,7 @@ public class CarBuyOperationCore implements CarBuyOperation {
     // and adding the car to database;
     private final CreateCarService createCarService;
     private final ApiFeignClient apiFeignClient;
-    public CarBuyOperationCore(CreateCarService createCarService, MapCarFromApiService carFromApiService, ApiFeignClient apiFeignClient) {
+    public CarBuyOperationCore(CreateCarService createCarService, ApiFeignClient apiFeignClient) {
         this.createCarService = createCarService;
         this.apiFeignClient = apiFeignClient;
     }

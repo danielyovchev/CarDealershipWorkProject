@@ -1,7 +1,7 @@
 package com.project.data.crud.interfaces;
 
-import com.project.api.model.carsByParam.CarListResponse;
+import com.project.data.domain.model.CarListDomainResponse;
 
 public interface GetAllCarsByColour {
-    CarListResponse getByColour(String colour);
+    CarListDomainResponse getByColour(String colour);
 }
