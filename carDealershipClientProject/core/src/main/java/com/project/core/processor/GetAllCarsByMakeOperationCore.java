@@ -28,8 +28,9 @@ public class GetAllCarsByMakeOperationCore implements GetAllCarsByMakeOperation 
     public Either<Error, CarListResponse> process(final CarMakeRequest input) {
         return Try.of(() -> {
             return CarListResponse.builder().carList(getAllCarsByMake.getAllCarsByMake(input.getMake())
-                            .getCarDomainModelList().stream()
-                            .map(mapper::mapCar)
+                            .getCarDomainModelList()
+                    .stream()
+                    .map(mapper::mapCar)
                     .toList()).build();
         }).toEither().mapLeft(Throwable -> {
             if(Throwable instanceof CarNotFoundException){

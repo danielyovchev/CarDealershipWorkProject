@@ -27,7 +27,8 @@ public class GetAllCarsByColourOperationCore implements GetAllCarsByColourOperat
     @Override
     public Either<Error, CarListResponse> process(final CarColourRequest input) {
         return Try.of(() -> {
-            return CarListResponse.builder().carList(getAllCarsByColour.getByColour(input.getColour()).getCarDomainModelList()
+            return CarListResponse.builder().carList(getAllCarsByColour.getByColour(input.getColour())
+                    .getCarDomainModelList()
                     .stream()
                     .map(mapper::mapCar)
                     .toList()).build();
