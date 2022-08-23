@@ -42,7 +42,10 @@ public class GetSalaryOperationCore implements GetSalaryOperation {
             final LocalDate dateEnd = yearMonth.atEndOfMonth();
             final SalaryRequest salaryRequest = SalaryRequest.builder()
                     .baseSalary(employee.getSalary())
-                    .soldCarsPrices(salesRepository.findAllByEmployeeIdAndDateBetween(input.getId(), dateStart, dateEnd).stream().map(Sales::getPrice).toList())
+                    .soldCarsPrices(salesRepository.findAllByEmployeeIdAndDateBetween(input.getId(), dateStart, dateEnd)
+                            .stream()
+                            .map(Sales::getPrice)
+                            .toList())
                     .build();
             return EmployeeSalaryResponse.builder()
                     .firstName(employee.getFirstName())

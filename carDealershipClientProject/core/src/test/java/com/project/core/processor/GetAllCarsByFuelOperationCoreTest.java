@@ -1,5 +1,6 @@
 package com.project.core.processor;
 
+import com.project.api.model.carsByParam.CarListResponse;
 import com.project.api.model.carsByParam.FuelRequest;
 import com.project.data.crud.interfaces.GetAllCarsByFuel;
 import com.project.data.db.entity.Car;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 class GetAllCarsByFuelOperationCoreTest {
@@ -53,6 +55,8 @@ class GetAllCarsByFuelOperationCoreTest {
 
     @Test
     void process() {
-        assertEquals(getAllCarsByFuelOperationCore.process(new FuelRequest("petrol")).get().getCarList().get(0), 1);
+
+        assertEquals(getAllCarsByFuelOperationCore.process(new FuelRequest("petrol"))
+                .get().getCarList().size(), 1);
     }
 }

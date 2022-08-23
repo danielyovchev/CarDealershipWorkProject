@@ -1,12 +1,9 @@
 package com.project.api.model.employee;
 
 import com.project.api.base.OperationResult;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter @Setter(AccessLevel.PRIVATE) @Builder
+@Getter @Setter(AccessLevel.PRIVATE) @Builder @EqualsAndHashCode
 public class EmployeeSalaryResponse implements OperationResult {
     private String firstName;
     private String lastName;
