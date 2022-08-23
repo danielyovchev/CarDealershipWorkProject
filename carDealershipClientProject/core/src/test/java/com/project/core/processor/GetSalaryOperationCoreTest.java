@@ -87,6 +87,6 @@ class GetSalaryOperationCoreTest {
                 .build();
         Mockito.when(getSalaryService.getSalary(any())).thenReturn(salaryResponse);
 
-        assertEquals("Ivan", getSalaryOperationCore.process(employeeSalaryRequest).get().getFirstName());
+        assertEquals(2214.01, getSalaryOperationCore.process(employeeSalaryRequest).get().getSalary());
     }
 }
