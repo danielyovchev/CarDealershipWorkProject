@@ -35,7 +35,7 @@ public class CarBuyOperationCore implements CarBuyOperation {
                 return CarBuyResponse.builder().message("Car has done too many kilometers").build();
             }
             final CarApiResponseModel carApiResponseModel = apiFeignClient.getCar(input.getVin());
-            CreateCarRequest createCarRequest =CreateCarRequest.builder()
+            CreateCarRequest createCarRequest = CreateCarRequest.builder()
                     .vin(input.getVin())
                     .make(carApiResponseModel.getMake())
                     .model(carApiResponseModel.getModel())
