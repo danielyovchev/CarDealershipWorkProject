@@ -1,6 +1,7 @@
 package com.project.core.processor;
 
 import com.price.api.model.PriceRequest;
+import com.price.api.model.PriceResponse;
 import com.project.api.base.Error;
 import com.project.api.error.*;
 import com.project.api.model.carSellModel.CarSellRequest;
@@ -46,11 +47,12 @@ public class CarSellOperationCore implements CarSellOperation {
                     .months(carSellRequest.getMonths())
                     .type(carSellRequest.getDealType())
                     .build();
-            createSaleService.createSale(carSellRequest, getPriceService.getPriceFromService(priceRequest).getPrice());
+            PriceResponse priceResponse = getPriceService.getPriceFromService(priceRequest);
+            createSaleService.createSale(carSellRequest, priceResponse.getPrice());
             return CarSellResponse.builder()
                     .car(car.getMake()+" "+ car.getModel())
-                    .price(getPriceService.getPriceFromService(priceRequest).getPrice())
-                    .message(getPriceService.getPriceFromService(priceRequest).getMessage())
+                    .price(priceResponse.getPrice())
+                    .message(priceResponse.getMessage())
                     .build();
         }).toEither().mapLeft( Throwable -> {
             if(Throwable instanceof CarNotFoundException){

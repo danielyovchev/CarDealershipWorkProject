@@ -68,7 +68,7 @@ class CarSellOperationCoreTest {
         Mockito.when(carFromApiService.getCar(carSellRequest.getVin())).thenReturn(car);
         Mockito.when(customerRepository.findById(customer.getId())).thenReturn(Optional.of(customer));
         Mockito.when(getPriceService.getPriceFromService(priceRequest)).thenReturn(priceResponse);
-        Mockito.when(createSaleService.createSale(carSellRequest, 6000.00)).thenReturn(null);
+        Mockito.when(createSaleService.createSale(any(), any())).thenReturn(null);
 
         assertEquals(7050.20, carSellOperationCore.process(carSellRequest).get().getPrice());
     }

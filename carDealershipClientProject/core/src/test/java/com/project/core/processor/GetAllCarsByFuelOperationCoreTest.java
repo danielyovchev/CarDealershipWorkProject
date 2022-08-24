@@ -31,6 +31,10 @@ class GetAllCarsByFuelOperationCoreTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    void process() {
         CarDomainModel car1 = new CarDomainModel();
         car1.setMake("Ford");
         car1.setFuel("petrol");
@@ -47,16 +51,12 @@ class GetAllCarsByFuelOperationCoreTest {
         car1.setYear(1995);
         car1.setModel("Escort");
         car1.setVin("1FASP11J6TW112004");
-        when(getAllCarsByFuel.getAllCarsByFuel("petrol")).thenReturn(CarListDomainResponse
+        CarListDomainResponse carListDomainResponse =   CarListDomainResponse
                 .builder()
                 .carDomainModelList(List.of(car1))
-                .build());
-    }
-
-    @Test
-    void process() {
-
-        assertEquals(getAllCarsByFuelOperationCore.process(new FuelRequest("petrol"))
-                .get().getCarList().size(), 1);
+                .build();
+        when(getAllCarsByFuel.getAllCarsByFuel("petrol")).thenReturn(carListDomainResponse);
+        FuelRequest fuelRequest = new FuelRequest("petrol");
+        assertEquals(getAllCarsByFuelOperationCore.process(fuelRequest).get().getClass(), CarListResponse.class);
     }
 }
