@@ -48,4 +48,25 @@ class CarBuyOperationCoreTest {
         Mockito.when(createCarService.addCar(any())).thenReturn(null);
         assertEquals("Car Ford Escort is bought for 5450.0", carBuyOperationCore.process(carBuyRequest).get().getMessage());
     }
+    @Test
+    void processMileageExcess() {
+        CarBuyRequest carBuyRequest = CarBuyRequest.builder()
+                .price(5450.00)
+                .mileage(450000)
+                .vin("afasdasd123")
+                .build();
+        CarApiResponseModel carApiResponseModel = CarApiResponseModel
+                .builder()
+                .model("Escort")
+                .make("Ford")
+                .fuel("petrol")
+                .build();
+        CarBuyResponse carBuyResponse = CarBuyResponse.builder()
+                .message("Car " + carApiResponseModel.getMake() + " " + carApiResponseModel.getModel() + " is bought for "
+                        + carBuyRequest.getPrice())
+                .build();
+        Mockito.when(apiFeignClient.getCar(any())).thenReturn(carApiResponseModel);
+        Mockito.when(createCarService.addCar(any())).thenReturn(null);
+        assertEquals("Car has done too many kilometers", carBuyOperationCore.process(carBuyRequest).get().getMessage());
+    }
 }
