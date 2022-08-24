@@ -4,6 +4,8 @@ import com.example.api.feign.ApiFeignClient;
 import com.example.api.model.CarApiResponseModel;
 import com.project.api.model.carBuyModel.CarBuyRequest;
 import com.project.api.model.carBuyModel.CarBuyResponse;
+import com.project.data.crud.exception.CarAlreadyExistsException;
+import com.project.data.crud.exception.CarNotFoundException;
 import com.project.data.crud.interfaces.CreateCarService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -68,5 +70,26 @@ class CarBuyOperationCoreTest {
         Mockito.when(apiFeignClient.getCar(any())).thenReturn(carApiResponseModel);
         Mockito.when(createCarService.addCar(any())).thenReturn(null);
         assertEquals("Car has done too many kilometers", carBuyOperationCore.process(carBuyRequest).get().getMessage());
+    }
+    @Test
+    void processAlreadyExists() {
+        CarBuyRequest carBuyRequest = CarBuyRequest.builder()
+                .price(5450.00)
+                .mileage(150000)
+                .vin("afasdasd123")
+                .build();
+        CarApiResponseModel carApiResponseModel = CarApiResponseModel
+                .builder()
+                .model("Escort")
+                .make("Ford")
+                .fuel("petrol")
+                .build();
+        CarBuyResponse carBuyResponse = CarBuyResponse.builder()
+                .message("Car " + carApiResponseModel.getMake() + " " + carApiResponseModel.getModel() + " is bought for "
+                        + carBuyRequest.getPrice())
+                .build();
+        Mockito.when(apiFeignClient.getCar(any())).thenReturn(carApiResponseModel);
+        Mockito.when(createCarService.addCar(any())).thenThrow(new CarAlreadyExistsException());
+        assertEquals("Car already bought", carBuyOperationCore.process(carBuyRequest).getLeft().getMessage());
     }
 }

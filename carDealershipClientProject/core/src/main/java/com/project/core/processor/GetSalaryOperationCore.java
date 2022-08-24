@@ -1,6 +1,7 @@
 package com.project.core.processor;
 
 import com.project.api.base.Error;
+import com.project.api.error.EmployeeNotFoundError;
 import com.project.api.error.SalaryCalculationError;
 import com.project.api.model.employee.EmployeeSalaryRequest;
 import com.project.api.model.employee.EmployeeSalaryResponse;
@@ -59,7 +60,7 @@ public class GetSalaryOperationCore implements GetSalaryOperation {
                 .toEither()
                 .mapLeft(Throwable -> {
                     if(Throwable instanceof EmployeeNotFoundException){
-                        throw new EmployeeNotFoundException();
+                        return new EmployeeNotFoundError();
                     }
                     return new SalaryCalculationError();
                 });
